@@ -40,14 +40,15 @@ defmodule Pigeon.FCM.Notification do
           | :unavailable
           | :internal
           | :third_party_auth_error
+          | :unknown_error
 
   @typedoc ~S"""
   FCM notification target. Must be one of the following:
 
   - `{:token, "string"}` - Registration token to send a message to.
-  - `{:topic, "string"}` - Topic name to send a message to, e.g. "weather". 
+  - `{:topic, "string"}` - Topic name to send a message to, e.g. "weather".
     Note: "/topics/" prefix should not be provided.
-  - `{:condition, "string"}` - Condition to send a message to, e.g. "'foo' 
+  - `{:condition, "string"}` - Condition to send a message to, e.g. "'foo'
     in topics && 'bar' in topics".
   """
   @type target :: {:token, binary} | {:topic, binary} | {:condition, binary}
