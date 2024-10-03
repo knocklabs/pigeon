@@ -75,11 +75,11 @@ defmodule Pigeon.FCM do
   ```
   n = Pigeon.FCM.Notification.new({:token, "reg ID"}, %{"body" => "test message"})
   ```
-   
-  5. Send the notification. 
 
-  On successful response, `:name` will be set to the name returned from the FCM 
-  API and `:response` will be `:success`. If there was an error, `:error` will 
+  5. Send the notification.
+
+  On successful response, `:name` will be set to the name returned from the FCM
+  API and `:response` will be `:success`. If there was an error, `:error` will
   contain a JSON map of the response and `:response` will be an atomized version
   of the error type.
 
@@ -182,9 +182,7 @@ defmodule Pigeon.FCM do
           Process.send_after(self(), @refresh, @retry_after)
           {:noreply, %{state | retries: state.retries - 1}}
         else
-          raise "too many failed attempts to refresh, last error: #{
-                  inspect(exception)
-                }"
+          raise "too many failed attempts to refresh, last error: #{inspect(exception)}"
         end
     end
   end
@@ -214,7 +212,7 @@ defmodule Pigeon.FCM do
 
   defp fetch_token(config) do
     source = {:service_account, config.service_account_json, [scopes: @scopes]}
-    Goth.Token.fetch(%{source: source})
+    Goth.Token.fetch(%{source: source, http_client: config.http_client})
   end
 
   defp schedule_refresh(state, token) do
